@@ -1,0 +1,181 @@
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0;
+  color: #333;
+  line-height: 1.5;
+}
+
+/* Layout principal con CSS Grid para login.html */
+main {
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+/* Estilos para el formulario de login */
+#login-form {
+  background: white;
+  padding: 20px;
+  border: 1px solid #ddd;
+  width: 100%;
+  max-width: 350px;
+  display: grid;
+  gap: 15px;
+}
+
+#login-form h1 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+/* Layout para todo.html - CSS Grid */
+body:has(#todo-list) {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  min-height: 100vh;
+}
+
+header {
+  background: #333;
+  color: white;
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header h1 {
+  font-size: 1.3em;
+}
+
+#logout-btn {
+  background: #666;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+/* Main content para todo page */
+main:has(#task-form) {
+  padding: 20px;
+  max-width: 700px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* Formulario de tareas */
+#task-form {
+  background: white;
+  padding: 15px;
+  border: 1px solid #ddd;
+  margin-bottom: 20px;
+  display: flex;
+  gap: 10px;
+  align-items: end;
+  flex-wrap: wrap;
+}
+
+#task-form label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+#task-input {
+  flex: 1;
+  min-width: 200px;
+  padding: 8px;
+  border: 1px solid #ccc;
+}
+
+/* Lista de tareas con Flexbox */
+#todo-list {
+  list-style: none;
+  background: white;
+  border: 1px solid #ddd;
+}
+
+.task {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+  gap: 10px;
+}
+
+.task:last-child {
+  border-bottom: none;
+}
+
+.task-text {
+  flex: 1;
+  padding: 0 10px;
+}
+
+.task-done .task-text {
+  text-decoration: line-through;
+  color: #888;
+}
+
+/* Botones */
+button {
+  background: #007cba;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.edit-btn {
+  background: #d4a853;
+}
+
+.delete-btn {
+  background: #c85450;
+}
+
+/* Inputs */
+input[type="text"],
+input[type="password"] {
+  padding: 8px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+input[type="checkbox"] {
+  cursor: pointer;
+}
+
+/* Labels */
+label {
+  color: #555;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  #task-form {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .task {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  
+  header {
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+  }
+}
