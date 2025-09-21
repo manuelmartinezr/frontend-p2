@@ -74,8 +74,19 @@ list.addEventListener('click', (event) => {
     }
 
     task.text = new_text
+    task.updated_at = Date.now()
 
     renderTasks(); // re-render whole list
+  }
+  if (event.target.type === "checkbox") {
+    const li = event.target.closest("li");
+    const id = Number(li.dataset.id);
+
+    const task = tasks.find(t => t.id === id);
+    if (task) {
+      task.done = event.target.checked; // update data
+      task.updated_at = Date.now();
+    }
   }
 });
 form.addEventListener('submit', (event) => {
