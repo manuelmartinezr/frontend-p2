@@ -19,7 +19,7 @@ function renderTasks(){
             <input type="checkbox" ${task.done ? "checked" : ""} />
             <span class="task-text">${task.text}</span>
             <button class="edit-btn">Edit</button>
-            <button class="delete-btn">Delete</button>'
+            <button class="delete-btn">Delete</button>
             `
         list.appendChild(li)
     })
