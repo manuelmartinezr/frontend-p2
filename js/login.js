@@ -1,9 +1,7 @@
-// Make sure the key exists
 if (localStorage.getItem('logged') === null) {
   localStorage.setItem('logged', 'false');
 }
 
-// Now check its value
 const is_logged = localStorage.getItem('logged') === 'true';
 
 if (is_logged) {

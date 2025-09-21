@@ -7,7 +7,20 @@ logout_btn.addEventListener('click', (event) =>{
 
 const form = document.getElementById('task-form')
 const list = document.getElementById('todo-list')
-const tasks = []
+let tasks = []
+
+function validateTask(text){
+    if (!text || text.trim() === ""){
+        return {valid: false, error: "Task cannot be empty"}
+    }
+    if (text.trim().length < 10){
+        return {valid: false, error: "Task must be at least 10 characters long"}
+    }
+    if (tasks.some(t=>t.text === text.trim())){
+        return {valid: false, error: "Task already exists"}
+    }
+    return { valid: true, value: text.trim() }
+}
 
 function renderTasks(){
     list.innerHTML = ""
@@ -26,25 +39,60 @@ function renderTasks(){
 }
 
 list.addEventListener('click', (event) => {
-  if (event.target.classList.contains('delete-btn')) {
-    const li = event.target.closest("li");
-    li.remove();
-
+    const li = event.target.closest('li')
     const id = Number(li.dataset.id);
+    const task = tasks.find(t => t.id === id);
+
+  if (event.target.classList.contains('delete-btn')) {
+    li.remove();
 
     tasks = tasks.filter(t => t.id !== id);
 
     renderTasks();
   }
-});
+  if (event.target.classList.contains('edit-btn')){
+    
+    const span = li.querySelector('.task-text')
+    const input = document.createElement('input')
+    
 
+    input.type = "text";
+    input.value = task.text;
+    input.className = 'edit-input';
+    span.replaceWith(input)
+
+    event.target.textContent = "Save";
+    event.target.classList.remove("edit-btn");
+    event.target.classList.add("save-btn");
+  } else if (event.target.classList.contains("save-btn")) {
+    const input = li.querySelector(".edit-input");
+    const new_text = input.value.trim();
+    validation = validateTask(new_text)
+    if(!validation.valid){
+        alert(validation.error)
+        return
+    }
+
+    task.text = new_text
+
+    renderTasks(); // re-render whole list
+  }
+});
 form.addEventListener('submit', (event) => {
     event.preventDefault();
+
+    const raw_text = document.getElementById('task-input').value
+    validation = validateTask(raw_text)
+
+    if(!validation.valid){
+        alert(validation.error)
+        return
+    }
 
     const now = Date.now()
     const new_task = {
         id : now,
-        text : document.getElementById('task-input').value,
+        text : validation.value,
         done: false,
         created_at: now,
         updated_at: null
