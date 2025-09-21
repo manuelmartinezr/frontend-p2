@@ -1,13 +1,15 @@
 const logout_btn = document.getElementById('logout-btn')
-
 logout_btn.addEventListener('click', (event) =>{
     localStorage.setItem('logged', 'false')
     window.location.href = 'login.html'
 })
 
+
 const form = document.getElementById('task-form')
 const list = document.getElementById('todo-list')
 let tasks = []
+
+renderTasks()
 
 function validateTask(text){
     if (!text || text.trim() === ""){
@@ -21,20 +23,31 @@ function validateTask(text){
     }
     return { valid: true, value: text.trim() }
 }
+function createTaskElement(task) {
+  const li = document.createElement("li");
+  li.className = "task";
+  li.dataset.id = task.id;
+  li.innerHTML = `
+    <input type="checkbox" ${task.done ? "checked" : ""} />
+    <span class="task-text">${task.text}</span>
+    <button class="edit-btn">Edit</button>
+    <button class="delete-btn">Delete</button>
+  `;
+  return li;
+}
 
-function renderTasks(){
+async function renderTasks(){
     list.innerHTML = ""
     tasks.forEach(task => {
-        const li = document.createElement('li')
-        li.className = "task" // asigna clase a nuevo elemento task
-        li.dataset.id = task.id; // asigna un atributo data-id con el id
-        li.innerHTML =`
-            <input type="checkbox" ${task.done ? "checked" : ""} />
-            <span class="task-text">${task.text}</span>
-            <button class="edit-btn">Edit</button>
-            <button class="delete-btn">Delete</button>
-            `
-        list.appendChild(li)
+       list.appendChild(createTaskElement(task));
+    })
+    const res = await fetch('https://dummyjson.com/c/d076-bddf-4977-b00e');
+
+// parse the body as JSON
+    api_tasks = await res.json(); 
+
+    api_tasks.forEach(task => {
+       list.appendChild(createTaskElement(task));
     })
 }
 
